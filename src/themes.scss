@@ -1,0 +1,16 @@
+$themes: (
+  light: (
+    backgroundColor: rgba(255, 255, 255, 1),
+    boxShadow: 0 2px 12px 0 rgba(12, 11, 18, .1),
+    textColor: rgba(12, 11, 18, 1),
+    altTextColor: rgba(12, 11, 18, .4),
+    cardBorders: 1px solid rgba(12, 11, 18, .05),
+  ),
+  dark: (
+    backgroundColor: rgba(51, 51, 51, 1),
+    boxShadow: 0 2px 12px 0 rgba(12, 11, 18, 1),
+    textColor: rgba(205, 205, 205, 1),
+    altTextColor: rgba(205, 205, 205, .45),
+    cardBorders: 1px solid rgba(12, 11, 18, .3),
+  ),
+);
