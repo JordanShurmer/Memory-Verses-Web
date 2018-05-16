@@ -2,12 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import Firebase from './firebase-plugin.js'
+import store from './store.js'
 
 Vue.use(ElementUI);
-Vue.use(Firebase);
 
 new Vue({
   el: '#app',
+  store,
   render: h => h(App)
-})
+});

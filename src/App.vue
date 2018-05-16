@@ -19,7 +19,7 @@
       <h2>All Verses</h2>
       <div class="grid">
         <verse-card class="grid-item"
-                    v-for="(verse, index) in orderedVerses"
+                    v-for="(verse, index) in verses"
                     :key="index"
                     :verse="verse"
                     :showText="false"
@@ -34,6 +34,7 @@
 <script>
   import VerseCard from './VerseCard.vue';
   import ThemePicker from './ThemePicker.vue';
+  import { mapState } from 'vuex'
 
   export default {
     name: 'app',
@@ -43,8 +44,7 @@
     },
     data() {
       return {
-        activeTheme: localStorage.getItem("activeTheme") || "light",
-        verses: [{
+        staticVerses: [{
           start: new Date(2017, 10, 5),
           reference: '2 Timothy 3:16-17',
           pre: "",
@@ -161,27 +161,15 @@
         }
         ]
         ,
-        orderedVerses: []
       }
     },
-    watch: {
-      activeTheme(val) {
-        localStorage.setItem("activeTheme", val);
-      }
-    },
-    computed: {
-      currentVerse() {
-        return this.orderedVerses[0];
-      },
-    },
-    async created() {
-        let querySnapshot = await this.$verses.orderBy("start", "desc").get();
-        this.orderedVerses = querySnapshot.docs.map(docSnapshot => {
-          let data = docSnapshot.data();
-          data.start = new Date(data.start.seconds*1000);
-          return data
-        });
-
+    computed: mapState([
+      "activeTheme",
+      "verses",
+      "currentVerse"
+    ]),
+    created() {
+      this.$store.dispatch("fetchVerses");
     }
   }
 </script>

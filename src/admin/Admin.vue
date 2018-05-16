@@ -8,42 +8,47 @@
       </div>
 
       <h2>Add Verse</h2>
-      <verse-card
-        v-if="currentVerse"
-        class="current-verse"
-        :verse="currentVerse"
-        :showText="true"
-        :hideControls="true"
-      ></verse-card>
 
-      <h2>All Verses</h2>
-      <div class="grid">
-        <verse-card class="grid-item"
-                    v-for="(verse, index) in orderedVerses"
-                    :key="index"
-                    :verse="verse"
-                    :showText="false"
-                    :monthOnly="true"
-        ></verse-card>
-      </div>
+      <el-input v-model="reference" label="Reference" placeholder="John 3:16" />
+      <el-input v-model="pre" label="Pre-Text" placeholder="A verse or two for context" />
+      <el-input v-model="text" label="Text" placeholder="For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life." />
+      <el-input v-model="post" label="Post-Text" placeholder="For some context" />
+      <el-date-picker v-model="start" />
 
     </div>
   </div>
 </template>
 
 <script>
+  import ThemePicker from '../ThemePicker.vue';
+  import {stateMap} from 'vuex';
 
   export default {
     name: 'admin',
+    components: {
+      'theme-picker': ThemePicker,
+    },
     data() {
       return {
+        reference: '',
+        pre: '',
+        text: '',
+        post: '',
+        start: new Date()
       }
     },
+    computed: stateMap([
+      "activeTheme",
+      "currentVerse"
+    ]),
+    created() {
+      this.start = this.currentVerse.start || new Date();
+    }
   }
 </script>
 
 <style lang="scss" scoped>
-  @import "themify.scss";
+  @import "../themify.scss";
 
   .app-container {
     position: absolute;

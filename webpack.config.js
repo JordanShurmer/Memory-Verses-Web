@@ -3,11 +3,14 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    app: './src/main.js',
+    admin: './src/admin/main.js'
+  },
   output: {
     path: path.resolve(__dirname, './public'),
     publicPath: '/',
-    filename: 'main.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -92,7 +95,14 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       hash: true,
+      chunks: ['app'],
       filename: 'index.html',
+      template: './src/index.html',
+    }),
+    new HtmlWebpackPlugin({
+      hash: true,
+      chunks: ['admin'],
+      filename: 'admin.html',
       template: './src/index.html',
     })
   ]
