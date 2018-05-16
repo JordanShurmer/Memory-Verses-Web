@@ -4,16 +4,18 @@
 
       <div class="header">
         <h1 class="title">📖 Memory Verses Admin</h1>
-        <theme-picker class="themes" v-model="activeTheme"></theme-picker>
+        <theme-picker class="themes"></theme-picker>
       </div>
 
       <h2>Add Verse</h2>
 
-      <el-input v-model="reference" label="Reference" placeholder="John 3:16" />
-      <el-input v-model="pre" label="Pre-Text" placeholder="A verse or two for context" />
-      <el-input v-model="text" label="Text" placeholder="For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life." />
-      <el-input v-model="post" label="Post-Text" placeholder="For some context" />
-      <el-date-picker v-model="start" />
+      <span class="label">Reference</span><el-input v-model="reference" label="Reference" placeholder="John 3:16" ></el-input>
+      <span class="label">Pre-Text</span><el-input v-model="pre" type="textarea" autosize label="Pre-Text" placeholder="A verse or two for context" ></el-input>
+      <span class="label">Text</span><el-input v-model="text" type="textarea" autosize label="Text" placeholder="For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."></el-input>
+      <span class="label">Post-Text</span><el-input v-model="post" type="textarea" autosize label="Post-Text" placeholder="For some context" ></el-input>
+      <span class="label">Date</span><el-date-picker v-model="startGuess"></el-date-picker>
+
+      <el-button @click="submit" :disabled="!submittable">Submit</el-button>
 
     </div>
   </div>
@@ -21,7 +23,7 @@
 
 <script>
   import ThemePicker from '../ThemePicker.vue';
-  import {stateMap} from 'vuex';
+  import {mapState} from 'vuex';
 
   export default {
     name: 'admin',
@@ -34,15 +36,43 @@
         pre: '',
         text: '',
         post: '',
-        start: new Date()
+        start: undefined,
       }
     },
-    computed: stateMap([
-      "activeTheme",
-      "currentVerse"
-    ]),
+    computed: {
+      submittable() {
+        return this.reference && this.text;
+      },
+      startGuess: {
+        get() {
+          if (this.start) return this.start;
+
+          const prevDate = this.currentVerse ? this.currentVerse.start : undefined;
+          if (prevDate) prevDate.setDate(prevDate.getDate() + 7);
+          return prevDate ? prevDate : undefined;
+        },
+        set(val) {
+          this.start = val
+        }
+      },
+      ...mapState([
+                 "activeTheme",
+                 "currentVerse"
+               ])
+    },
+    methods: {
+      submit() {
+        this.$store.dispatch("newVerse", {
+          reference: this.reference,
+          pre: this.pre,
+          text: this.text,
+          post: this.post,
+          start: this.start
+        })
+      }
+    },
     created() {
-      this.start = this.currentVerse.start || new Date();
+      this.$store.dispatch("fetchVerses");
     }
   }
 </script>

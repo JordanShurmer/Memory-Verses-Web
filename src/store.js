@@ -26,7 +26,7 @@ export default new Vuex.Store({
   // /__/\__\__,_|\__\___|
   state: {
     verses: [],
-    currentVerse: {},
+    currentVerse: undefined,
     activeTheme: localStorage.getItem("activeTheme") || "light",
   },
 
@@ -67,6 +67,12 @@ export default new Vuex.Store({
         .catch(function (error) {
           console.log("Error getting documents: ", error);
         });
+    },
+    newVerse(context, verse) {
+      db.collection("verses")
+        .add(verse)
+        .then(docRef => console.log(`Added Verse ${docRef}`))
+        .catch(reason => console.error("Failed to add verse", reason))
     }
   }
 

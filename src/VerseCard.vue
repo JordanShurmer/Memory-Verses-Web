@@ -50,15 +50,16 @@
 
 <script>
   export default {
-    props: ['verse', 'showText', "monthOnly", "hideControls"],
+    props: ['verse', 'startWithText', "monthOnly", "hideControls"],
     data() {
       return {
         monthNames: ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"
         ],
-        showContext: false
+        showContext: false,
+        showText: this.startWithText
       }
-    }
+    },
   }
 </script>
 

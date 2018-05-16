@@ -4,7 +4,7 @@
 
       <div class="header">
         <h1 class="title">📖 Memory Verses</h1>
-        <theme-picker class="themes" v-model="activeTheme"></theme-picker>
+        <theme-picker class="themes"></theme-picker>
       </div>
 
       <h2>Current Verse</h2>
@@ -12,7 +12,7 @@
         v-if="currentVerse"
         class="current-verse"
         :verse="currentVerse"
-        :showText="true"
+        :startWithText="true"
         :hideControls="true"
       ></verse-card>
 
@@ -22,7 +22,7 @@
                     v-for="(verse, index) in verses"
                     :key="index"
                     :verse="verse"
-                    :showText="false"
+                    :startWithText="false"
                     :monthOnly="true"
         ></verse-card>
       </div>
@@ -168,7 +168,7 @@
       "verses",
       "currentVerse"
     ]),
-    created() {
+    async created() {
       this.$store.dispatch("fetchVerses");
     }
   }

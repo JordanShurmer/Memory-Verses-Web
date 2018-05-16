@@ -1,23 +1,23 @@
 <template>
   <div class="wrapper">
       <div
-        @click="choose('dark')"
-        class="picker dark"
-      ></div>
-
-      <div
-        @click="choose('light')"
-        class="picker light"
+        @click="toggle"
+        class="picker"
+        :class="activeTheme"
       ></div>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['value'],
+    computed: {
+      activeTheme() {
+        return this.$store.state.activeTheme;
+      }
+    },
     methods: {
-      choose(theme) {
-        this.$emit('input', theme);
+      toggle() {
+        this.$store.commit("toggleTheme");
       }
     }
   }
@@ -26,24 +26,16 @@
 <style lang="scss" scoped>
   @import "themes.scss";
 
-  .theme-light .light {
-    display: none;
-  }
-
-  .theme-dark .dark {
-    display: none;
-  }
-
   .picker {
     border-radius: 100%;
     height: 100%;
     width: 100%;
 
     &.dark {
-      background: map_get(map_get($themes, 'dark'), 'backgroundColor');
+      background: map_get(map_get($themes, 'light'), 'backgroundColor');
     }
     &.light {
-      background: map_get(map_get($themes, 'light'), 'backgroundColor');
+      background: map_get(map_get($themes, 'dark'), 'backgroundColor');
     }
 
   }
