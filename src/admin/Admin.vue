@@ -9,13 +9,38 @@
 
       <h2>Add Verse</h2>
 
-      <span class="label">Reference</span><el-input v-model="reference" label="Reference" placeholder="John 3:16" ></el-input>
-      <span class="label">Pre-Text</span><el-input v-model="pre" type="textarea" autosize label="Pre-Text" placeholder="A verse or two for context" ></el-input>
-      <span class="label">Text</span><el-input v-model="text" type="textarea" autosize label="Text" placeholder="For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."></el-input>
-      <span class="label">Post-Text</span><el-input v-model="post" type="textarea" autosize label="Post-Text" placeholder="For some context" ></el-input>
-      <span class="label">Date</span><el-date-picker v-model="startGuess"></el-date-picker>
+      <section class="form">
+        <div>
+          <span class="label">Reference</span>
+          <el-input v-model="reference" label="Reference" placeholder="John 3:16"></el-input>
+        </div>
 
-      <el-button @click="submit" :disabled="!submittable">Submit</el-button>
+        <div>
+          <span class="label">Pre-Text</span>
+          <el-input v-model="pre" type="textarea" autosize label="Pre-Text"
+                    placeholder="A verse or two for context"></el-input>
+        </div>
+
+        <div>
+          <span class="label">Text</span>
+          <el-input v-model="text" type="textarea" autosize label="Text"
+                    placeholder="For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."></el-input>
+        </div>
+
+        <div>
+          <span class="label">Post-Text</span>
+          <el-input v-model="post" type="textarea" autosize label="Post-Text" placeholder="For some context"></el-input>
+        </div>
+
+        <div>
+          <span class="label">Date</span>
+          <el-date-picker v-model="startGuess"></el-date-picker>
+        </div>
+
+        <div>
+          <el-button @click="submit" :disabled="!submittable">Submit</el-button>
+        </div>
+      </section>
 
     </div>
   </div>
@@ -56,9 +81,9 @@
         }
       },
       ...mapState([
-                 "activeTheme",
-                 "currentVerse"
-               ])
+        "activeTheme",
+        "currentVerse"
+      ])
     },
     methods: {
       submit() {
@@ -112,48 +137,18 @@
       }
     }
 
-    .current-verse {
-      width: 95%;
-      margin: auto auto 10vh;
-    }
-
-    .verse-card {
-    }
-
-    .grid {
-      display: flex;
-      flex-flow: row wrap;
-      align-items: flex-start;
-      justify-content: flex-start;
-      width: 95%;
+    .form {
+      max-width: 500px;
       margin: auto;
-
-      .grid-item {
-        position: relative;
-        margin-top: 15px;
-        flex: 0 1 100%;
+      
+      &>div {
+        margin-top: .5em;
       }
 
-      @media (min-width: 780px) {
-        .grid-item {
-          flex-basis: 48%;
-          margin-left: 1%;
-          margin-right: 1%;
-        }
-      }
-
-      @media (min-width: 1239px) {
-        .grid-item {
-          flex-basis: 31%;
-        }
-      }
-
-      @media (min-width: 1365px) {
-        .grid-item {
-          flex-basis: 23%;
-        }
+      .label {
+        display: block;
       }
     }
-
   }
+
 </style>
