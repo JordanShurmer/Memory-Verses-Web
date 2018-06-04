@@ -104,6 +104,13 @@
           text: this.text,
           post: this.post,
           start: this.start
+        }).then(() => {
+          this.reference
+            = this.pre
+            = this.text
+            = this.post
+            = this.start
+            = ''
         })
       }
     },

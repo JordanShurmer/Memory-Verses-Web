@@ -71,7 +71,7 @@ export default new Vuex.Store({
         });
     },
     newVerse(context, verse) {
-      db.collection("verses")
+      return db.collection("verses")
         .add(verse)
         .then(docRef => console.log(`Added Verse ${docRef}`))
         .catch(reason => console.error("Failed to add verse", reason))

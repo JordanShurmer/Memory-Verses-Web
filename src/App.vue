@@ -9,9 +9,8 @@
 
       <h2>Current Verse</h2>
       <verse-card
-        v-if="currentVerse"
         class="current-verse"
-        :verse="currentVerse"
+        :verse="currentVerse || allVerses[0]"
         :startWithText="true"
         :hideControls="true"
       ></verse-card>
@@ -19,7 +18,7 @@
       <h2>All Verses</h2>
       <div class="grid">
         <verse-card class="grid-item"
-                    v-for="(verse, index) in verses"
+                    v-for="(verse, index) in allVerses"
                     :key="index"
                     :verse="verse"
                     :startWithText="false"
@@ -34,7 +33,7 @@
 <script>
   import VerseCard from './VerseCard.vue';
   import ThemePicker from './ThemePicker.vue';
-  import { mapState } from 'vuex'
+  import {mapState} from 'vuex'
 
   export default {
     name: 'app',
@@ -163,11 +162,16 @@
         ,
       }
     },
-    computed: mapState([
-      "activeTheme",
-      "verses",
-      "currentVerse"
-    ]),
+    computed: {
+      allVerses() {
+        return [...this.staticVerses, ...this.verses].sort((v1, v2) => v2.start - v1.start)
+      },
+      ...mapState([
+        "activeTheme",
+        "verses",
+        "currentVerse"
+      ])
+    },
     async created() {
       this.$store.dispatch("fetchVerses");
     }
