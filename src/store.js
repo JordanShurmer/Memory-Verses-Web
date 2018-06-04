@@ -40,10 +40,12 @@ export default new Vuex.Store({
       state.currentVerse = verses[0];
     },
     toggleTheme(state) {
-      if (state.activeTheme === "light")
+      if (state.activeTheme === "light") {
         state.activeTheme = "dark";
-      else
+      } else {
         state.activeTheme = "light";
+      }
+      localStorage.setItem("activeTheme", state.activeTheme)
     }
   },
 
