@@ -3,7 +3,7 @@
     <div class="header">
       <a class="ref" :href="'http://esv.to/' + verse.reference">{{ verse.reference }}</a>
       <small v-if="!monthOnly" class="date">{{ verse.start.toDateString() }}</small>
-      <small v-if="monthOnly" class="date">{{ monthNames[verse.start.getMonth()] }}</small>
+      <small v-if="monthOnly" class="date">{{ monthNames[verse.start.getMonth()] }} {{ verse.start.getFullYear() }}</small>
     </div>
     <el-collapse-transition>
       <div v-if="showText" class="body">
