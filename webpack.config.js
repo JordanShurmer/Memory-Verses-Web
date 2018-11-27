@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
   entry: {
@@ -104,7 +105,8 @@ module.exports = {
       chunks: ['admin'],
       filename: 'admin.html',
       template: './src/index.html',
-    })
+    }),
+    new VueLoaderPlugin(),
   ]
 }
 
